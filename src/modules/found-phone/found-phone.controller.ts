@@ -236,13 +236,16 @@ export const getAllReports = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const { imei, phoneModel, brand, location, status, page, limit } =
+  const { imei, phoneModel, brand, location, status, page, limit, userId } =
     req.query as any;
 
   const where: any = {
     isDeleted: false,
   };
 
+  if (userId) {
+    where.userId = userId;
+  }
   if (imei) {
     where.imei = { contains: imei, mode: 'insensitive' };
   }
